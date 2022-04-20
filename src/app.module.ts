@@ -15,6 +15,7 @@ import { join } from 'path';
           package: 'customers',
           // protoPath: join(__dirname, './proto/customers.proto'),
           protoPath: join(process.cwd(), './proto/customers.proto'),
+          
         },
       },
     ]),
