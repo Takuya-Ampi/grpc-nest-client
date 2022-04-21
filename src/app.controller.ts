@@ -1,28 +1,14 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-interface CreateCustomerDto {
-  name: string
-  age: number
-  address: string
-}
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-  @Get('grpc')
   call(): Observable<any> {
-    console.log('aaa')
-    return this.appService.GetAll();
+    return this.appService.getSampleData();
   }
-  // @Post('grpc')
-  // insert(@Body() createCustomerDto: CreateCustomerDto): Observable<any> {
-  //   return this.appService.createOne(createCustomerDto);
-  // }
 }

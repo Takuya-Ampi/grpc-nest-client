@@ -1,25 +1,22 @@
-import { Injectable, Inject, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit, Inject } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
-interface CustomerService  {
-  GetAll({}): Observable<any>;
+interface SampleService {
+  findOne(data: { id: number }): Observable<any>;
 }
 
 @Injectable()
 export class AppService implements OnModuleInit {
-  private customerService: CustomerService;
+  private sampleService: SampleService;
 
-  constructor(@Inject('CUSTOMERS_PACKAGE') private client: ClientGrpc) {}
+  constructor(@Inject('SAMPLE_PACKAGE') private client: ClientGrpc) {}
+
   onModuleInit() {
-    this.customerService = this.client.getService<CustomerService>('CustomerService');
+    this.sampleService = this.client.getService<SampleService>('AppService');
   }
 
-  getHello(): string {
-    return 'Hello World!';
-  }
-  GetAll(): Observable<any>  {
-    console.log('iii')
-    return this.customerService.GetAll({})
+  getSampleData(): Observable<string> {
+    return this.sampleService.findOne({ id: 1 });
   }
 }
